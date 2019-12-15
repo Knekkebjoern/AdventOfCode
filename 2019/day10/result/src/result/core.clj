@@ -57,7 +57,7 @@
           ]
       {:target target :can-detect (empty? blocks) :blocked-by blocks })))
 
-(defn -main
+(defn -part1
   "I don't do a whole lot ... yet."
   [& args]
   (let [asteroid-map (get-map "input.txt")
@@ -72,7 +72,54 @@
                           {asteroid {:detects detects :detect-count detect-count}}))
         sorted (reverse (sort-by #(get-in (val %) [:detect-count]) detects))
         ]
-    (take 1 sorted)
+    (println "Part 1" (take 1 sorted))))
 
+(defn shoot-asteroid [station angles angle-map res]
+  (if (empty? angle-map)
+    res
+    (let [angle (first angles)
+          asteroids (set (get angle-map angle))
+          distances (for [asteroid asteroids
+                          :let [dx (- (first station) (first asteroid))
+                                dy (- (second station) (second asteroid))
+                                distance (Math/sqrt (+ (* dx dx) (* dy dy)))]]
+                      [distance asteroid])
+          ;a (println "=========")
+          ;a (println "angles" angles)
+          a (println "distances" distances)
+          nearest-asteroid (second (first (sort-by first < distances)))
+          ;a (println "angle-map count" (count angle-map))
+                                       ;a (println "angle-map" angle-map)
+          a (println "asteroids" asteroids)
+          a (println "nearest-asteroid" nearest-asteroid)
+          remaining-asteroids (disj asteroids nearest-asteroid)
+          new-angle-map (if (empty? remaining-asteroids)
+                          (dissoc angle-map angle)
+                          (assoc angle-map angle remaining-asteroids))
+          new-res (conj res nearest-asteroid)
+          ;a (println "keys" (keys new-angle-map))
+          ]
+      (recur station
+             (if (empty? (rest angles)) (sort < (keys new-angle-map)) (rest angles))
+             new-angle-map
+             new-res))))
 
+(defn -part2
+  "I don't do a whole lot ... yet."
+  [& args]
+  (let [station [26 29]
+        asteroid-map (get-map "input.txt")
+        asteroids (map first (filter #(= \# (second %)) asteroid-map))
+        angle-list (for [asteroid asteroids
+                         :let [dx (- (first station) (first asteroid))
+                               dy (- (second station) (second asteroid))
+                               angle (- (Math/toDegrees (Math/atan2 dy dx)) 90)
+                               angle (if (< angle 0) (+ angle 360) angle)]]
+                     {angle [asteroid]})
+        angle-map (apply (partial merge-with into) angle-list)
+        order (shoot-asteroid station (sort < (keys angle-map)) angle-map [])
+        res (for [x (range (count order))]
+              [(inc x) (nth order x)])
+        ]
+    res
     ))
