@@ -7,7 +7,7 @@
         data (map #(Integer/parseInt %) lines)]
     data))
 
-(defn find-parts [coll target cnt]
+(defn solve [coll target cnt]
   (if (= 1 cnt)
     (if (.contains coll target)
       [target]
@@ -21,12 +21,7 @@
               ]
           (if (empty? res)
             (recur (rest c))
-            (conj res v ))))))
-  )
-
-(defn solve [coll target count]
-  (find-parts (sort coll) target count))
-
+            (conj res v )))))))
 
 (defn -main
   "I don't do a whole lot ... yet."
