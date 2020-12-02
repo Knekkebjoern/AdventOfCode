@@ -15,13 +15,11 @@
     (loop [c coll]
       (if (empty? c)
         []
-        (let [v (first c)
-              new-target (- target v)
-              res (find-parts (rest c) new-target (dec cnt))
-              ]
+        (let [new-target (- target (first c))
+              res (find-parts (rest c) new-target (dec cnt))]
           (if (empty? res)
             (recur (rest c))
-            (conj res v )))))))
+            (conj res (first c))))))))
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -30,6 +28,4 @@
         part2 (solve (get-input "input.txt") 2020 3)]
     (println "Part 1:" part1 "Answer:" (apply * part1))
     (println "Part 2:" part2 "Answer:" (apply * part2))
-    )
-
-  )
+    ))
