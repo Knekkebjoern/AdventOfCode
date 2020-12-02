@@ -11,12 +11,11 @@
   (if (= 1 cnt)
     (if (.contains coll target)
       [target]
-      nil)
+      [])
     (loop [c coll]
       (if (empty? c)
         []
-        (let [new-target (- target (first c))
-              res (find-parts (rest c) new-target (dec cnt))]
+        (let [res (solve (rest c) (- target (first c)) (dec cnt))]
           (if (empty? res)
             (recur (rest c))
             (conj res (first c))))))))
