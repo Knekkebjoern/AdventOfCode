@@ -2,61 +2,31 @@
   (:require [clojure.string :as str]))
 
 (defn get-input [filename]
-  (for [line (str/split (slurp filename) #"\n")]
-      (read-string line)))
+  (let [values (for [line (str/split (slurp filename) #"\n")]
+                (read-string line))]
+    (conj values 0 (+ 3 (apply max values)))))
 
 (defn solve1 [input]
   (frequencies (for [pair (partition 2 1 (sort input))]
                 (apply - pair))))
 
-;; (defn solve2 [input]
-;;   (if (empty? input)
-;;     []
-;;     (if (= 1 (count input))
-;;       input
-;;       (let [high (+ 3 (first input))
-;;             a (prn "Input: " input)
-;;             a (prn "High: " high)
-;;             ]
+(defn solve2 [input]
+  (loop [input (reverse (sort input)) cache {}]
+    (if (empty? input)
+      (get cache (apply min (keys cache)))
+      (let [target (first input)
+            total (get cache target 1)
+            compatible (take-while #(<= (- target %) 3) (rest input))
+            updates (for [x compatible
+                          :let [v (get cache x 0)]]
+                      {x (+ total v)})
+            newcache (apply merge cache updates)]
+        (recur (rest input) newcache)))))
 
-;;         (loop [input (rest input) res []]
-;;           (if (empty? input)
-;;             res
-;;             (if (< high (first input))
-;;               res
-;;               (let [a (prn "-------")
-;;                     a (prn "Input: " input)
-;;                     a (prn "Res:" res)
-;;                     newres (conj res (solve2 (rest input)))
-;;                     a (prn "Newres:" newres)]
-;;                 (recur (rest input) newres)))))))
-;;       ))
-
-(def input (sort (get-input "input3.txt")))
-
-;(solve2 (sort input))
-
-
-
-;(def input [1 3 4 6])
-
-(loop [input (reverse (sort input)) cache {} res []]
-  (if (empty? input)
-    res
-    (let [
-          a (prn "---------")
-          a (prn "input" input)
-          a (prn "cache" cache)
-          target (first input)
-          compatible (take-while #(<= (- target %) 3) (rest input))
-          cache (merge-with into cache (into {} (for [x compatible]
-                                                  {x ])})))
-          a (prn "target" target)
-          a (prn "compatible" compatible)
-          a (prn "cache" cache)
-]
-      (recur (rest input) cache res))))
-
-;; (let [input (get-input "input2.txt")
-;;       stage1 (solve1 input)]
-;;   (println "Stage1:" (* (inc (get stage1 -1)) (inc (get stage1 -3)))))
+(defn -main
+  [& args]
+  (let [input (get-input "input.txt")
+        part1 (solve1 input)
+        part2 (time (solve2 input))]
+    (println "Part1:" part1)
+    (println "Part2:" part2)))
