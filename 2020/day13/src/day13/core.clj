@@ -18,31 +18,21 @@
   (let [mods (map #(mod time %) ids)]
     (nth ids(.indexOf mods (apply max mods)))))
 
-(defn divisors [n]
-  (filter #(zero? (rem n %)) (range 1 (inc n))))
 
-(defn divides? [m n] (zero? (rem m n)))
-(defn prime? [n] (and (< 1 n) (not-any? #(divides? n %) (range 2 n))))
-
-(defn solve3 [ids]
+(defn solve2 [ids]
   (let [targets (filter #(not (nil? %)) (map-indexed (fn [i id]
                                                        (if (= :x id)
                                                          nil
-                                                         (mod (- id i) id)))
+                                                         i))
                                                      ids))
+        multiple (apply * (filter number? ids))
         a (prn "------")
-        a (prn "targets" targets)
-        divisors (set (flatten (map divisors targets)))
-        a (prn "divisors" divisors)
-        a (prn "hmm" (apply * divisors))
-        primes (filter prime? divisors)
-        a (prn "primes" primes)
-        res (apply * primes)
-        a (prn "res" res)
+        a (prn "targets" targets)        
+        a (prn "multiple" multiple)
         ]
-    targets))
+    nil))
 
-(solve3 input)
+(solve2 input)
 
 (defn -main
   [& args]
