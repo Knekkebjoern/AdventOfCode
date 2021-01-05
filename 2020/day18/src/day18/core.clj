@@ -24,15 +24,36 @@
             [{ :num (Integer/parseInt (apply str res)) } s])
           (recur (rest s) (conj res a)))))))
 
-(defn tokenize [s]
+
+(defn next-token2 [s]
+  (loop [s s res []]
+    (if (empty? s)
+      [ (Integer/parseInt (apply str res))  []]
+      (let [a (first s)]
+        (if (or (= a \*)
+                (= a \+))
+          (if (empty? res)            
+            [ a (rest s) ]
+            [ (Integer/parseInt (apply str res))  s])
+          (recur (rest s) (conj res a)))))))
+
+(defn tokenize1 [s]
   (loop [s s res []]
     (if (empty? s)
       res
       (let [[token rem] (next-token s)]
         (recur rem (conj res token))))))
 
-(defn eval-expression [s]
-  (loop [tokens (tokenize s) acc 0 oper nil]
+
+(defn tokenize2 [s]
+  (loop [s s res []]
+    (if (empty? s)
+      res
+      (let [[token rem] (next-token2 s)]
+        (recur rem (conj res token))))))
+
+(defn eval-expression1 [s]
+  (loop [tokens (tokenize1 s) acc 0 oper nil]
     (if (empty? tokens)
       acc
       (let [token (first tokens)
@@ -44,20 +65,43 @@
             (recur remaining-tokens (:num token) oper)))))))
 
 
-(defn eval-input [line]
+(defn eval-expression2 [s]
+  (loop [tokens (tokenize2 s)
+         opers [\+ \*]]
+    (if (empty? opers)
+      (first tokens)
+      (let [oper (first opers)
+            i (.indexOf tokens oper)]
+        (if (= -1 i)
+          (recur tokens (rest opers))
+          (let [arg1 (nth tokens (dec i))
+                arg2 (nth tokens (inc i))
+                val ((case oper
+                              \* *
+                              \+ +
+                              nil) arg1 arg2)
+                newtokens (concat (take (dec i) tokens)
+                                  [val]
+                                  (drop (+ i 2) tokens))]
+            (recur newtokens opers)))))))
+
+
+(defn eval-input [line eval-fn]
   (loop [line (str/replace line #"\s" "")]
     (let [n (str/replace line #"\([^\(\)]+\)"
-                         #(str (eval-expression (butlast (rest %)))))]
+                         #(str (eval-fn (butlast (rest %)))))]
       (if (= n line)
-        (eval-expression line)
+        (eval-fn line)
         (recur n)))))
 
-
-(defn get-input [filename]
+(defn solve1 [filename eval-fn]
   (for [line (str/split (slurp filename) #"\n")]
-    (eval-input line)))
+    (eval-input line eval-fn)))
 
 (defn -main
   [& args]
-  (let [result1 (get-input "input.txt")]
-    (println "Result1:" (reduce + result1))))
+  (let [
+        result1 (solve1 "input.txt" eval-expression1)
+        result2 (solve1 "input.txt" eval-expression2)]
+    (println "Result1:" (reduce + result1))
+    (println "Result2:" (reduce + result2))))
