@@ -1,4 +1,4 @@
-(ns day4.core)
+(ns year_2021.day4)
 (require '[clojure.string :as str])
 
 
@@ -55,7 +55,7 @@
           (* (reduce + unmarked) (last drawn))))
 
 
-(let [input1 (get-input "input1.txt")
+(let [input1 (get-input "inputs/day4_input1.txt")
       part1 (solve1 first input1)
       part2 (solve1 last input1)]
   (println "Part1: " part1)

@@ -1,4 +1,4 @@
-(ns day5.core)
+(ns year_2021.day5)
 
 (require '[clojure.string :as str])
 
@@ -34,7 +34,7 @@
         res (for [[k v] freq :when (> v 1)] {k v})]
     (count res)))
 
-(let [input1 (get-input "input1.txt")
+(let [input1 (get-input "inputs/day5_input1.txt")
       part1 (solve1 (fn [[[x1 y1] [x2 y2]]]
                       (or (= x1 x2) (= y1 y2))) input1)
       part2 (solve1 nil input1)

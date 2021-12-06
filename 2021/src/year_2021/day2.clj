@@ -1,4 +1,4 @@
-(ns day2.core)
+(ns year_2021.day2)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -29,8 +29,8 @@
       (recur new-coord (rest data)))))
 
 
-(let [input1 (get-input "input1.txt")
-      input2 (get-input "input1.txt")
+(let [input1 (get-input "inputs/day2_input1.txt")
+      input2 (get-input "inputs/day2_input1.txt")
       part1 (solve1 [0 0] input1)
       part2 (solve2 [0 0 0] input2)]
   (println "Part1: " part1)

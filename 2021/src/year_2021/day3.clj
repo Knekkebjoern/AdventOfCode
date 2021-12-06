@@ -1,4 +1,4 @@
-(ns day3.core)
+(ns year_2021.day3)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -37,8 +37,8 @@
         co2 (calc2 < 0 data)]
     (* oxygen co2)))
 
-(let [input1 (get-input "input1.txt")
-      input2 (get-input "input1.txt")
+(let [input1 (get-input "inputs/day3_input1.txt")
+      input2 (get-input "inputs/day3_input1.txt")
       part1 (solve1 input1)
       part2 (solve2 input2)]
   (println "Part1: " part1)
