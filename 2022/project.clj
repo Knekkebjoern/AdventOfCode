@@ -6,4 +6,6 @@
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/math.combinatorics "0.1.6"]
                  [org.clojure/math.numeric-tower "0.0.5"]]
-  :repl-options {:init-ns year-2022.core})
+  :repl-options {:init-ns year-2022.core}
+  :main year_2022.day7/-main
+  )
