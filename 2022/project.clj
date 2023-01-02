@@ -5,7 +5,13 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/math.combinatorics "0.1.6"]
-                 [org.clojure/math.numeric-tower "0.0.5"]]
+                 [org.clojure/math.numeric-tower "0.0.5"]
+                 [org.clojure/data.priority-map "1.1.0"]
+                 [quil "4.0.0-SNAPSHOT"]]
   :repl-options {:init-ns year-2022.core}
-  :main year_2022.day11/-main
+  :main year_2022.day12/-main
+  :jvm-opts ["-Xss10m" ]
+  :user {
+         :plugins [[cider/cider-nrepl "0.9.0"]]}
+
   )
