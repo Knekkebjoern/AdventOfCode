@@ -8,11 +8,12 @@
                  [org.clojure/math.combinatorics "0.1.6"]
                  [org.clojure/math.numeric-tower "0.0.5"]
                  [org.clojure/data.priority-map "1.1.0"]
+                 [clj-http "3.12.3"]
                  [quil "4.0.0-SNAPSHOT"]]
   :resource-paths ["resources/rebl-0.9.245.jar"]
-  :repl-options {:init-ns year-2022.core}
-  :main year_2022.day12/-main
-  :jvm-opts ["-Xss10m" ]
+  :repl-options {:init-ns aoc.core}
+  :main aoc.core
+  :jvm-opts []
   :plugins [[lein-cljfmt "0.5.6"]]
   :user {
          :plugins [[cider/cider-nrepl "0.9.0"]]}
