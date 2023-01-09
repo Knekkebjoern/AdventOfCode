@@ -1,4 +1,4 @@
-(ns year_2022.day5)
+(ns aoc.year2022.day5)
 (require '[clojure.set :as set])
 (require '[clojure.string :as str])
 
@@ -26,13 +26,13 @@
                  (if (empty? xs)
                    res
                    (recur (inc i) (rest xs) (assoc res i (first xs)))))]
-    
+
     [stacks moves]))
 
-(defn solve [[stacks moves] rev]
+(defn solve1 [[stacks moves] rev]
   (if (empty? moves)
     (apply str (for [i (sort (keys stacks))]
-                (first (get stacks i))))    
+                (first (get stacks i))))
     (let [[n from to] (first moves)
           from-s (get stacks from)
           crates (if rev
@@ -45,8 +45,10 @@
           ]
       (recur [new-stacks (rest moves)] rev))))
 
-(let [input (get-input "inputs/day5.txt")
-      part1 (solve input true)
-      part2 (solve input false)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2022/day5.txt")
+        part1 (solve1 input true)
+        part2 (solve1 input false)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")

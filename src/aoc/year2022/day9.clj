@@ -1,11 +1,11 @@
-(ns year_2022.day9)
+(ns aoc.year2022.day9)
 (require '[clojure.set :as set])
 (require '[clojure.string :as str])
 (require '[clojure.pprint :as pprint])
 
 ; (:R :R :R :R :U :U :U :U :L :L :L :D :R :R :R :R :D :L :L :L :L :L :R :R)
 (defn get-input [filename]
-  (let [lines (str/split (slurp filename) #"\n")]    
+  (let [lines (str/split (slurp filename) #"\n")]
     (flatten (map #(if-let [[_ d c] (re-matches #"^(.*?) (\d*)$" %)]
                      (repeat (Integer/parseInt c) (keyword d))
                      []) lines))))
@@ -42,7 +42,7 @@
                      (inc hy)
                      (dec hy))]
         (< 1 dx) (if (< hx tx) ; diagonal row
-                   [(inc hx) hy] 
+                   [(inc hx) hy]
                    [(dec hx) hy])
         (< 1 dy) (if (< hy ty) ; diagonal column
                                      [hx (inc hy)]
@@ -76,7 +76,7 @@
 (defn solve2 [data]
   (loop [steps data
          knots (repeat 10 [0 0])
-         visited #{[0 0]}]    
+         visited #{[0 0]}]
     (if (empty? steps)
       (do
         (count visited))
@@ -90,11 +90,10 @@
             newtail (last newknots)]
         (recur (rest steps) newknots (conj visited newtail))))))
 
+(defn solve []
+  (let [input (get-input "inputs/2022/day9.txt")
+        part1 (solve1 input)
+        part2 (solve2 input)]
+    {:part1 part1 :part2 part2}))
 
-
-(let [input (get-input "inputs/day9.txt")
-      part1 (solve1 input)
-      part2 (solve2 input)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
-
+(defn status [] "*")

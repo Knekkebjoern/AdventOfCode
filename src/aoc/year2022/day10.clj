@@ -1,10 +1,10 @@
-(ns year_2022.day10)
+(ns aoc.year2022.day10)
 (require '[clojure.set :as set])
 (require '[clojure.string :as str])
 (require '[clojure.pprint :as pprint])
 
 (defn get-input [filename]
-  (let [lines (str/split (slurp filename) #"\n")]    
+  (let [lines (str/split (slurp filename) #"\n")]
     (for [line lines]
       (if-let [[_ d] (re-matches #"^addx (\-*\d+)$" line)]
         [:addx (Integer/parseInt d)]
@@ -47,9 +47,10 @@
           :let [s (apply str row)]]
       s)))
 
-(let [input (get-input "inputs/day10.txt")
-      part1 (solve1 input)
-      part2 (pprint/pprint (solve2 input))]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2022/day10.txt")
+        part1 (solve1 input)
+        part2 (pprint/pprint (solve2 input))]
+    {:part1 part1 :part2 part2}))
 
+(defn status [] "*")

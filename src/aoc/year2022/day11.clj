@@ -1,11 +1,11 @@
-(ns year_2022.day11)
+(ns aoc.year2022.day11)
 (require '[clojure.set :as set])
 (require '[clojure.string :as str])
 (require '[clojure.pprint :as pprint])
 
 (defn from-operation [xs]
   (for [x xs]
-    (cond 
+    (cond
       (= x "old") :OLD
       (= x "new") :NEW
       (= x "+") +
@@ -15,7 +15,7 @@
               nil))))
 
 (defn get-input [filename]
-  (let [lines (str/split (slurp filename) #"\n")]    
+  (let [lines (str/split (slurp filename) #"\n")]
     (loop [lines lines res {} cur nil]
       ;(println (first lines))
       (if (empty? lines)
@@ -56,7 +56,7 @@
 (defn solve1 [data relief rounds]
   (loop [data data cur 0 round 1]
     (let [items (get-in data [cur :items] [])]
-      (if (empty? items) 
+      (if (empty? items)
         (if (get data (inc cur))
           (recur data (inc cur) round) ;; go on to next monkey
           (if (< round rounds)
@@ -68,7 +68,7 @@
             (reduce * (take 2 (reverse (sort (for [[_ v] data]
                                                (:inspected v)))))))) ;; all done
         (let [item (first items)
-              operation (get-in data [cur :operation])              
+              operation (get-in data [cur :operation])
               newworry (for [x operation]
                          (if (= :OLD x) item x))
               newworry (eval newworry)
@@ -81,11 +81,13 @@
                           (assoc-in [throwto :items] (conj (get-in data [throwto :items]) newworry)))]
           (recur newdata cur round))))))
 
-(defn -main []
-  (let [input (get-input "inputs/day11.txt")
+(defn solve []
+  (let [input (get-input "inputs/2022/day11.txt")
         part1 (solve1 input 3 20)
         relief (reduce * (for [[_ v] input] (:test v)))
         part2 (solve1 input relief 10000)]
-    (println "Part1:" part1)
-    (println "Part2:" part2)))
+    {:part1 part1 :part2 part2}))
 
+
+;; too slow
+(defn status [] "!")

@@ -1,4 +1,4 @@
-(ns year_2022.day12)
+(ns aoc.year2022.day12)
 (require '[clojure.string :as str])
 (require '[clojure.pprint :as pprint])
 (require '[clojure.data.priority-map :refer [priority-map]])
@@ -22,7 +22,7 @@
     (<= (- va vb) 1) ; one lower, equal or higher elevation
     ))
 
-(defn get-neighbors [g valid-neighbor-f [x y]]   
+(defn get-neighbors [g valid-neighbor-f [x y]]
   (for [neighbor [[(inc x) y] [(dec x) y] [x (inc y)] [x (dec y)]]
         :when (and (contains? g neighbor)
                    (valid-neighbor-f g [x y] neighbor))]
@@ -60,15 +60,15 @@
 
 (defn dijkstra-step [state]
   (let [{:keys [g source target dist prev Q valid-neighbor-f]} state]
-    (if (empty? Q)            
+    (if (empty? Q)
       state
       (let [[u dist_u] (peek Q)
-            Q' (pop Q)            
+            Q' (pop Q)
             neighbors (get-neighbors g valid-neighbor-f u)
             alt (inc dist_u)
             candidates (for [v neighbors
                              :when (< alt (get dist v))] v)
-            dist' (apply merge dist (for [v candidates] {v alt}))              
+            dist' (apply merge dist (for [v candidates] {v alt}))
             prev' (apply merge prev (for [v candidates] {v u}))
             Q' (into Q' (for [v candidates] [v alt]))]
         (assoc state :dist dist' :prev prev' :Q Q')))))
@@ -98,13 +98,13 @@
 
 ;; (defn setup []
 ;;   (q/frame-rate 30)
-;;   (q/background 200)  
+;;   (q/background 200)
 ;;   (get-input "inputs/day12.txt"))
 
 
 ;; (defn update-state [state]
 ;;   (loop [state state i 100]
-;;     (if (empty? (:Q state))      
+;;     (if (empty? (:Q state))
 ;;       (do
 ;;         (print-result state)
 ;;         (q/no-loop)
@@ -126,14 +126,14 @@
 ;;               (= curr source)
 ;;               (nil? (get prev curr)))
 ;;         nil
-;;         (let [[x y] (get prev curr)]           
+;;         (let [[x y] (get prev curr)]
 ;;           (q/rect (+ (* x grid-width) grid-spacing)
 ;;                   (- (* y grid-height) grid-spacing)
 ;;                   (- grid-width grid-spacing)
 ;;                   (- grid-height grid-spacing))
 ;;           (recur [x y]))))))
 
-;; (defn draw [state]  
+;; (defn draw [state]
 ;;   (q/stroke 0)
 ;;   (q/stroke-weight 2)
 ;;   (q/background 0 0 0)
@@ -147,31 +147,31 @@
 ;;                (cond
 ;;                  (= [x y] source) (q/fill 0 0 0)
 ;;                  (= [x y] target) (q/fill 255 255 255)
-;;                  (contains? Q [x y]) (q/fill 0 255 255)                 
+;;                  (contains? Q [x y]) (q/fill 0 255 255)
 ;;                  (and (contains? dist [x y])
 ;;                       (< (get dist [x y]) inf)) (q/fill 32)
-;;                  :default (q/fill 128))               
+;;                  :default (q/fill 128))
 ;;                (q/rect (+ (* x grid-width) grid-spacing)
 ;;                        (- (* y grid-height) grid-spacing)
 ;;                        (- grid-width grid-spacing)
 ;;                        (- grid-height grid-spacing)))))
-;;     (draw-path state))) 
+;;     (draw-path state)))
 
 ;; (q/defsketch landscape
-;;   :title "Landscape" 
+;;   :title "Landscape"
 ;;   :settings #(q/smooth 2)
 ;;   :setup setup
 ;;   :update update-state
-;;   :draw draw 
+;;   :draw draw
 ;;   :size [1200 600]
-;;   :middleware [m/fun-mode])  
+;;   :middleware [m/fun-mode])
 
 
-(defn -main []
-  (let [input (get-input "inputs/day12.txt")
+(defn solve []
+  (let [input (get-input "inputs/2022/day12.txt")
         state (solve input)
         part1 (steps-from (:prev state) (:source state) (:target state))
         part2 (solve2 input)]
-    (println "Part1:" part1)
-    (println "Part2:" part2))
-  )
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")
