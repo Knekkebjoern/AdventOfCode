@@ -1,4 +1,4 @@
-(ns year_2021.day8)
+(ns aoc.year2021.day8)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -54,10 +54,10 @@
                  (get mappings d nil))]
       (recur (rest data) (conj res code)))))
 
-(let [input1 (get-input"inputs/day8_input1.txt")
-      input2 (get-input"inputs/day8_input2.txt")
-      part1 (solve1 input1 [])
-      part2 (solve2 input1 [])]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input"inputs/2021/day8.txt")
+        part1 (solve1 input [])
+        part2 (solve2 input [])]
+    {:part1 part1 :part2 part2}))
 
+(defn status [] "*")

@@ -1,6 +1,5 @@
-(ns year_2021.day4)
+(ns aoc.year2021.day4)
 (require '[clojure.string :as str])
-
 
 (defn transpose [m]
   (apply mapv vector m))
@@ -42,7 +41,7 @@
               new-winners (filter #(winner-board? new-drawn %) boards)
               new-boards (clojure.set/difference (set boards) (set new-winners))]
           (recur new-drawn
-                 (rest to-draw) 
+                 (rest to-draw)
                  new-boards
                  (conj winners {:drawn new-drawn :boards new-winners})
                  ))))))
@@ -51,13 +50,13 @@
   (let [winners (get-winners data)
         winner (f (filter #(not (empty? (:boards %))) winners))
         drawn (:drawn winner)
-        unmarked (get-unmarked drawn (first (:boards winner)))]              
+        unmarked (get-unmarked drawn (first (:boards winner)))]
           (* (reduce + unmarked) (last drawn))))
 
+(defn solve []
+  (let [input (get-input "inputs/2021/day4.txt")
+        part1 (solve1 first input)
+        part2 (solve1 last input)]
+    {:part1 part1 :part2 part2}))
 
-(let [input1 (get-input "inputs/day4_input1.txt")
-      part1 (solve1 first input1)
-      part2 (solve1 last input1)]
-  (println "Part1: " part1)
-  (println "Part2: " part2)
-  )
+(defn status [] "*")

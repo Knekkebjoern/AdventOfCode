@@ -1,4 +1,4 @@
-(ns year_2021.day7)
+(ns aoc.year2021.day7)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -28,11 +28,11 @@
                        (recur fuel (rest locations)))))]
     min-fuel))
 
-(let [input1 (get-input"inputs/day7_input1.txt")
-      part1 (solve1 fuel-to-point-1 input1)
-      part2 (solve1 fuel-to-point-2 input1)
-      ]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
-;; => nil
+(defn solve []
+  (let [input (get-input"inputs/2021/day7.txt")
+        part1 (:fuel (solve1 fuel-to-point-1 input))
+        part2 (:fuel (solve1 fuel-to-point-2 input))
+        ]
+    {:part1 part1 :part2 part2}))
 
+(defn status [] "*")

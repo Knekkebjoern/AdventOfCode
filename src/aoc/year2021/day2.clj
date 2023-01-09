@@ -1,8 +1,8 @@
-(ns year_2021.day2)
+(ns aoc.year2021.day2)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
-  (let [lines (str/split (slurp filename) #"\n")]    
+  (let [lines (str/split (slurp filename) #"\n")]
     (for [line lines
           :let [[d x] (str/split line #"\s+")]]
       [(keyword d) (Integer/parseInt x)])))
@@ -28,10 +28,10 @@
                       :up      [x y (- aim v)])]
       (recur new-coord (rest data)))))
 
+(defn solve []
+  (let [input (get-input "inputs/2021/day2.txt")
+        part1 (solve1 [0 0] input)
+        part2 (solve2 [0 0 0] input)]
+    {:part1 part1 :part2 part2}))
 
-(let [input1 (get-input "inputs/day2_input1.txt")
-      input2 (get-input "inputs/day2_input1.txt")
-      part1 (solve1 [0 0] input1)
-      part2 (solve2 [0 0 0] input2)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn status [] "*")

@@ -1,4 +1,4 @@
-(ns year_2021.day18)
+(ns aoc.year2021.day18)
 (require '[clojure.string :as str]
          '[clojure.zip :as z])
 
@@ -148,7 +148,7 @@
    (vector? (z/node loc))
    (every? number? (z/node loc))))
 
-(defn get-simple [f loc]  
+(defn get-simple [f loc]
   (loop [loc loc]
     (cond (nil? loc) nil
           (z/end? loc) nil
@@ -198,7 +198,7 @@
                         n-loc)]
             (if (some? n-loc)
               (z/root n-loc)
-              (z/root m-loc)))            
+              (z/root m-loc)))
           (recur (z/next loc)))))))
 
 (defn reduce-exp [exp]
@@ -227,13 +227,14 @@
                                      (+ (* 3 l) (* 2 r)))))))
           (recur (z/next loc)))))))
 
-(defn main []
+(defn solve []
   (let [res1 (reduce add-exp input)
         res2 (apply max (for [x input y input
                               :when (not= x y)]
-                          (magnitude (add-exp x y))))]    
-    (println "Part1" (magnitude res1))
-    (println "Part2" res2)))
+                          (magnitude (add-exp x y))))]
+    {:part1 (magnitude res1) :part2 res2}))
+
+(defn status [] "*")
 
 (defn tests []
   (assert (= (explode-exp [[[[[9,8],1],2],3],4])

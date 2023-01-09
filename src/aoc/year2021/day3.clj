@@ -1,11 +1,10 @@
-(ns year_2021.day3)
+(ns aoc.year2021.day3)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
-  (let [lines (str/split (slurp filename) #"\n")]    
+  (let [lines (str/split (slurp filename) #"\n")]
     (for [line lines]
       (str/split line #""))))
-
 
 (defn transpose [m]
   (apply mapv vector m))
@@ -24,10 +23,9 @@
         epsilon (Integer/parseInt (apply str (map second commons)) 2)]
     (* gamma epsilon)))
 
-
 (defn calc2 [f pos data]
   (if (= 1 (count data))
-    (Integer/parseInt (apply str (first data)) 2)    
+    (Integer/parseInt (apply str (first data)) 2)
     (let [common (nth (map first (get-commons f data)) pos)
           new-data (filter #(= common (get % pos)) data)]
       (recur f (inc pos) new-data))))
@@ -37,9 +35,10 @@
         co2 (calc2 < 0 data)]
     (* oxygen co2)))
 
-(let [input1 (get-input "inputs/day3_input1.txt")
-      input2 (get-input "inputs/day3_input1.txt")
-      part1 (solve1 input1)
-      part2 (solve2 input2)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2021/day3.txt")
+        part1 (solve1 input)
+        part2 (solve2 input)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")

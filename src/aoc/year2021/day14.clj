@@ -1,4 +1,4 @@
-(ns year_2021.day14)
+(ns aoc.year2021.day14)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -35,18 +35,17 @@
                             (for [[pair pair-v] pairs
                                   new-pair (get mappings pair [])]
                               {new-pair pair-v}))]
-          
+
       (recur mappings new-pairs (dec iters)))) )
 
-(defn main []
-  (let [input1 (get-input "inputs/day14_input1.txt")
-        part1  (solve1 (:mappings input1)
-                       (frequencies (partition 2 1 (:pattern input1)))
+(defn solve []
+  (let [input (get-input "inputs/2021/day14.txt")
+        part1  (solve1 (:mappings input)
+                       (frequencies (partition 2 1 (:pattern input)))
                        10)
-        part2  (solve1 (:mappings input1)
-                       (frequencies (partition 2 1 (:pattern input1)))
+        part2  (solve1 (:mappings input)
+                       (frequencies (partition 2 1 (:pattern input)))
                        40)]
-    (println "Part1: " part1)
-    (println "Part2: " part2)))
+    {:part1 part1 :part2 part2}))
 
-(main)
+(defn status [] "*")

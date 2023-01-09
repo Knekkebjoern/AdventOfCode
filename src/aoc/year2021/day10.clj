@@ -1,4 +1,4 @@
-(ns year_2021.day10)
+(ns aoc.year2021.day10)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -16,14 +16,14 @@
 (defn check-line [line]
   (loop [data line stack [] err nil]
     (let [k (first data)]
-      (cond 
+      (cond
         (not (nil? err)) {:invalid err}
-        (empty? data) (if (empty? stack) {:valid true} {:incomplete stack})      
+        (empty? data) (if (empty? stack) {:valid true} {:incomplete stack})
         :else  (case k
                  (\( \< \{ \[) (recur (rest data) (conj stack k) nil)
                  (\) \> \} \]) (if (closes? (last stack) k)
                                  (recur (rest data) (into [] (butlast stack)) nil)
-                                 (recur data stack k)))        
+                                 (recur data stack k)))
         ))))
 
 (def scores {\) 3
@@ -33,7 +33,7 @@
 
 (defn solve1 [data]
   (let [res (for [line data]
-              (check-line line))        
+              (check-line line))
         invalid (map :invalid (filter #(contains? % :invalid) res))
         scores (for [k invalid]
                  (get scores k 0))]
@@ -52,17 +52,17 @@
 
 (defn solve2 [data]
   (let [res (for [line data]
-              (check-line line))        
+              (check-line line))
         incomplete (map :incomplete (filter #(contains? % :incomplete) res))
         scores (sort (for [stack incomplete]
                       (complete-and-score-stack stack 0)))
         median (nth scores (quot (count scores) 2))]
     median))
 
-(let [input1 (get-input"inputs/day10_input1.txt")      
-      part1 (solve1 input1)
-      part2 (solve2 input1)
-      ]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input"inputs/2021/day10.txt")
+        part1 (solve1 input)
+        part2 (solve2 input)]
+    {:part1 part1 :part2 part2}))
 
+(defn status [] "*")
