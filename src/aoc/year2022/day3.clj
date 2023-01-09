@@ -1,7 +1,7 @@
-(ns year_2022.day3)
+(ns aoc.year2022.day3)
 (require '[clojure.set :as set])
+(require '[clojure.string :as str])
 (use '[clojure.string :only [index-of]])
-
 
 (defn get-input [filename]
   (str/split (slurp filename) #"\n"))
@@ -21,8 +21,10 @@
                     :let [common (apply set/intersection (map set group))]]
                 (inc (index-of priorities (first common)))))))
 
-(let [input (get-input "inputs/day3.txt")
-      part1 (solve1 input)
-      part2 (solve2 input)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2022/day3.txt")
+        part1 (solve1 input)
+        part2 (solve2 input)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")

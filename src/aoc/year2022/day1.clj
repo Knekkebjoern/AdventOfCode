@@ -1,4 +1,4 @@
-(ns year_2022.day1)
+(ns aoc.year2022.day1)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -13,8 +13,10 @@
 (defn solve2 [data]
   (apply + (take 3 (reverse (sort (map #(reduce + %) data))))))
 
-(let [input (get-input "inputs/day1.txt")
-      part1 (solve1 input)
-      part2 (solve2 input)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2022/day1.txt")
+        part1 (solve1 input)
+        part2 (solve2 input)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")

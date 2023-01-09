@@ -1,4 +1,4 @@
-(ns year_2022.day7)
+(ns aoc.year2022.day7)
 (require '[clojure.set :as set])
 (require '[clojure.string :as str])
 (require '[clojure.pprint :as pprint])
@@ -15,7 +15,7 @@
                       (case dir
                         ".." (vec (butlast dirs))
                         "/" ["/"]
-                        (conj dirs dir))                      
+                        (conj dirs dir))
                       dirs)
             newdata (if (not= dirs newdirs)
                       (update data newdirs #(assoc % "mytmp.txt" 0))
@@ -53,8 +53,10 @@
                size)]
     (apply min dirs)))
 
-(let [input (get-input "inputs/day7.txt")
-      part1 (solve1 input)
-      part2 (solve2 input)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2022/day7.txt")
+        part1 (solve1 input)
+        part2 (solve2 input)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")

@@ -1,4 +1,4 @@
-(ns year_2022.day8)
+(ns aoc.year2022.day8)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -13,7 +13,7 @@
 
 (defn get-los [[x y] rows cols]
   {:west (for [i (range (dec x) -1 -1)] [i y])
-   :east (for [i (range (inc x) cols)] [i y]) 
+   :east (for [i (range (inc x) cols)] [i y])
    :north (for [i (range (dec y) -1 -1)] [x i])
    :south (for [i (range (inc y) rows)] [x i])
    })
@@ -40,7 +40,7 @@
     (if (empty? heights)
       res
       (if (>= (first heights) height)
-        (conj res (first heights))        
+        (conj res (first heights))
         (recur (rest heights) (conj res (first heights)))))))
 
 (defn score [[x y] data]
@@ -59,8 +59,10 @@
                  (score [x y] data))]
     (apply max scores)))
 
-(let [input (get-input "inputs/day8.txt")
-      part1 (solve1 input)
-      part2 (solve2 input)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2022/day8.txt")
+        part1 (solve1 input)
+        part2 (solve2 input)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")
