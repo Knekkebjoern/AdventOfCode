@@ -1,4 +1,4 @@
-(ns year_2021.day21)
+(ns aoc.year2021.day21)
 (require '[clojure.string :as str])
 
 (defn dice-f []
@@ -22,7 +22,7 @@
         data
         (let [roll (+ (roll-dice) (roll-dice) (roll-dice))
               new-rolls (+ 3 dice-rolls)
-              
+
               new-pos (loop [pos (+ roll (:pos (get data curr)))]
                         (if (<= pos 10) pos (recur (- pos 10))))
               new-score (+ new-pos (:score (get data curr)))
@@ -35,7 +35,7 @@
         p1-score (:score (:p1 res))
         p2-score (:score (:p2 res))
         losing-score (min p1-score p2-score)]
-    (println "Part1" (* (:dice-rolls res) losing-score))))
+    (* (:dice-rolls res) losing-score)))
 
 ;; Part 2
 
@@ -65,7 +65,7 @@
           new-data (assoc new-data :curr new-curr)]
       new-data)))
 
-(defn play-turn [roll data]     
+(defn play-turn [roll data]
   (let [new-data (update-turn-data roll data)
         p1-score (:score (:p1 new-data))
         p2-score (:score (:p2 new-data))]
@@ -86,5 +86,11 @@
               :p2 {:pos 8 :score 0}
               :curr :p1}
         res (play-turn 0 data)]
-    (println "Part2" res)))
+    res))
 
+(defn solve []
+  (let [part1 (solve1)
+        part2 (solve2)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")

@@ -1,4 +1,4 @@
-(ns year_2021.day17)
+(ns aoc.year2021.day17)
 (require '[clojure.string :as str])
 
 (defn trajectory [startx starty startxv startyv txmin txmax tymin tymax]
@@ -15,12 +15,12 @@
                   new-y (+ y yv)
                   new-xv (cond (> xv 0) (dec xv)
                                (< xv 0) (inc xv)
-                               :else 0)                  
+                               :else 0)
                   new-yv (dec yv)
                   new-maxy (if (> new-y maxy) new-y maxy)]
               (recur new-x new-y new-xv new-yv new-maxy)))))
 
-(defn solve1 []
+(defn solve []
   ;; target area: x=175..227, y=-134..-79
   (let [
         xrange (range 0 228)
@@ -30,8 +30,6 @@
                           (trajectory 0 0 xv yv 175 227 -134 -79)))
         maxy (apply max (map :maxy results))
         velocities (set (map :velocity results))]
-    (println "Max height:" maxy)
-    (println "Velocities:" (count velocities))))
+    {:part1 maxy :part2 (count velocities)}))
 
-(defn main []
-  (solve1))
+(defn status [] "*")

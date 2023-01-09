@@ -1,8 +1,8 @@
-(ns year_2021.day13)
+(ns aoc.year2021.day13)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
-  (let [lines (str/split (slurp filename) #"\n")        
+  (let [lines (str/split (slurp filename) #"\n")
         points   (for [line (take-while #(not= % "") lines)
                        :let [[x y] (str/split line #",")]]
                    [(Integer/parseInt x) (Integer/parseInt y)])
@@ -22,7 +22,7 @@
       (prn "")
       (dorun (for [l d] (prn l))))))
 
-(defn fold-point [[axis v] [x y]]  
+(defn fold-point [[axis v] [x y]]
   (case axis
         "x" (if (> v x)
               [x y]
@@ -38,11 +38,11 @@
     (let [new-points (map #(fold-point (first folds) %) points)]
       (recur new-points (rest folds)))))
 
-(defn main []
-  (let [input1 (get-input"inputs/day13_input1.txt")
+(defn solve []
+  (let [input (get-input"inputs/2021/day13.txt")
         part1     (count (into #{}
-                               (solve1 (:points input1) [(first (:folds input1))])))
-        part2 (show-points (solve1 (:points input1) (:folds input1)))]
-    (println "Part1: " part1)
-    (println "Part2: " part2)))
+                               (solve1 (:points input) [(first (:folds input))])))
+        part2 (show-points (solve1 (:points input) (:folds input)))]
+    {:part1 part1 :part2 part2}))
 
+(defn status [] "*")

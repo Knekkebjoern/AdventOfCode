@@ -1,4 +1,4 @@
-(ns year_2021.day1)
+(ns aoc.year2021.day1)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -15,9 +15,10 @@
   (solve1 (for [[x y z] (partition 3 1 data)]
             (+ x y z))))
 
-(let [input1 (get-input "inputs/day1_input1.txt")
-      input2 (get-input "inputs/day1_input1.txt")
-      part1 (solve1 input1)
-      part2 (solve2 input2)]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2021/day1.txt")
+        part1 (solve1 input)
+        part2 (solve2 input)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")

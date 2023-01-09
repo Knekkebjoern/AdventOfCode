@@ -1,4 +1,4 @@
-(ns year_2021.day19)
+(ns aoc.year2021.day19)
 (require '[clojure.string :as str])
 (require '[clojure.math.combinatorics :as combo])
 (require '[clojure.math.numeric-tower :as math])
@@ -10,10 +10,10 @@
   (let [all-lines (filter #(not (empty? %)) (str/split (slurp filename) #"\n"))
         data  (loop [lines all-lines scanner-id nil res {}]
                 (if (empty? lines)
-                  res                  
+                  res
                   (let [line (first lines)
                         [_ new-id] (re-find #"--- scanner (\d+) ---" line)]
-                    (if (some? new-id)                      
+                    (if (some? new-id)
                       (recur (rest lines)
                              (Integer/parseInt new-id)
                              (assoc res (Integer/parseInt new-id) []))
@@ -46,7 +46,7 @@
   (apply merge
          (for [b1 coords b2 coords
                :when (not= b1 b2)
-               :let [sig1 (into [] (map - b1 b2)) 
+               :let [sig1 (into [] (map - b1 b2))
                      ;;sig2 (into [] (map - b2 b1))
                      ]]
            {sig1 {:from b1 :to b2}
@@ -67,11 +67,11 @@
                         inter (clojure.set/intersection signatures-1 signatures-2)
                         sample-signature (first inter)
                         base-sample-coord (:from (get base-case-signatures sample-signature))
-                        scanner-sample-coord (:from (get (get scanner-signatures signature-2) sample-signature))                        
+                        scanner-sample-coord (:from (get (get scanner-signatures signature-2) sample-signature))
                         translation (map - base-sample-coord scanner-sample-coord)
                         [scanner-2-id rotation-2] signature-2
                         translated-coords (for [coord (get data scanner-2-id)]
-                                            ;; rotate then translate 
+                                            ;; rotate then translate
                                             (map + translation (rotate coord rotation-2)))]
                   :when (and (not= base-case-id signature-2)
                              (>= (count inter) 12))]
@@ -105,7 +105,7 @@
                    base-case-signatures (get base-case-signatures base-case-key)]
                (apply concat
                       (for [scanner-id (keys data)
-                            :when (not= scanner-id base-case-id)    
+                            :when (not= scanner-id base-case-id)
                             :let [scanner-signatures (get-scanner-signatures
                                                       scanner-id
                                                       (get data scanner-id)
@@ -118,7 +118,7 @@
 
 (defn transform [rotation translation coords]
   (for [coord coords]
-    ;; rotate then translate 
+    ;; rotate then translate
     (map + translation (rotate coord rotation)))  )
 
 
@@ -130,7 +130,7 @@
 
 (def todo [0 25
            0 10
-           25 23 
+           25 23
            23 20
            23 13
            23 17
@@ -148,8 +148,8 @@
            7 11
            7 9
            7 26
-           27 3 
-           4 21 
+           27 3
+           4 21
            12 24
            15 22
            15 16
@@ -193,3 +193,7 @@
                b (get output2 0)]
            (reduce + (map math/abs (map - a b)))))
 (apply max tmp)
+
+
+;; Needs cleanup
+(defn status [] "!")

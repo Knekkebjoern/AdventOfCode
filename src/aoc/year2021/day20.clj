@@ -1,4 +1,4 @@
-(ns year_2021.day20)
+(ns aoc.year2021.day20)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -67,15 +67,22 @@
   (count (filter #(= % \#) (vals data))))
 
 (defn solve1 []
-  (let [[algo image] (get-input "inputs/day20.txt")]
+  (let [[algo image] (get-input "inputs/2021/day20.txt")]
     (-> image
         (process-image algo)
-        (process-image algo)        
+        (process-image algo)
         (count-lit))))
 
 (defn solve2 []
-  (let [[algo image] (get-input "inputs/day20.txt")]
+  (let [[algo image] (get-input "inputs/2021/day20.txt")]
     (loop [image image i 50]
       (if (zero? i)
-        (prn (count-lit image))
+        (count-lit image)
         (recur (process-image image algo) (dec i))))))
+
+(defn solve []
+  (let [part1 (solve1)
+        part2 (solve2)]
+    {:part1 part1 :part2 part2}))
+
+(defn status [] "*")

@@ -1,4 +1,4 @@
-(ns year_2021.day15)
+(ns aoc.year2021.day15)
 (require '[clojure.string :as str])
 (import (java.util PriorityQueue))
 
@@ -7,7 +7,7 @@
         data  (loop [lines all-lines y 0 res {}]
                 (if (empty? lines)
                   {:data res :end [(dec (count (first all-lines)))
-                                   (dec (count all-lines))]}  
+                                   (dec (count all-lines))]}
                   (let [line (first lines)
                         d (apply merge
                                  (for [x (range (count line))
@@ -94,18 +94,19 @@
                        unvisited)))))))))
 
 
-(defn main []
+(defn solve []
   (let [;; part1  (solve1 [0 0] (:end input1) (:data input1))
         ;; part1 (reduce + (for [p part1] (:risk p)))
         ;; part1 (- part1 (get (:data input1) [0 0]))
 
         ;;part2  (solve1 [0 0] (:end new-map) (:data new-map) false)
         ;;a (prn "DONE 1")
-        expanded-map (expand-map (get-input "inputs/day15_input1.txt"))
+        expanded-map (expand-map (get-input "inputs/2021/day15.txt"))
         part2 (dijkstra (:data expanded-map) [0 0] (:end expanded-map))
         part2 (get part2 (:end expanded-map))
-        
         ]
     ;;(println "Part1: " part1)
     (println "Part2: " part2)
     ))
+
+(defn status [] "!")

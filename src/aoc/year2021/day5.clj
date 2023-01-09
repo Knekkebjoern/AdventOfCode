@@ -1,5 +1,4 @@
-(ns year_2021.day5)
-
+(ns aoc.year2021.day5)
 (require '[clojure.string :as str])
 
 (defn transpose [m]
@@ -18,7 +17,7 @@
                 (cond (< a1 a2) 1
                       (> a1 a2) -1
                       :else 0))
-        xstep (stepf x1 x2)        
+        xstep (stepf x1 x2)
         ystep (stepf y1 y2)]
     (loop [[x y] [x1 y1] res []]
       (if (= [x y] [x2 y2])
@@ -34,11 +33,11 @@
         res (for [[k v] freq :when (> v 1)] {k v})]
     (count res)))
 
-(let [input1 (get-input "inputs/day5_input1.txt")
-      part1 (solve1 (fn [[[x1 y1] [x2 y2]]]
-                      (or (= x1 x2) (= y1 y2))) input1)
-      part2 (solve1 nil input1)
-      ]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2021/day5.txt")
+        part1 (solve1 (fn [[[x1 y1] [x2 y2]]]
+                        (or (= x1 x2) (= y1 y2))) input)
+        part2 (solve1 nil input)]
+    {:part1 part1 :part2 part2}))
 
+(defn status [] "*")

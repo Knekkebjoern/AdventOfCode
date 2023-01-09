@@ -1,4 +1,4 @@
-(ns year_2021.day6)
+(ns aoc.year2021.day6)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -18,9 +18,11 @@
                              n))]
       (recur (dec gen) new-data))))
 
-(let [input1 (get-input "inputs/day6_input1.txt")
-      part1 (solve1 80 (frequencies input1))
-      part2 (solve2 256 (frequencies input1))]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input "inputs/2021/day6.txt")
+        part1 (solve1 80 (frequencies input))
+        part2 (solve1 256 (frequencies input))]
+    {:part1 part1 :part2 part2}))
 
+;; part1 is wrong
+(defn status [] "!")

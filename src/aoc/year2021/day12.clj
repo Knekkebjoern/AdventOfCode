@@ -1,4 +1,4 @@
-(ns year_2021.day12)
+(ns aoc.year2021.day12)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
@@ -20,7 +20,7 @@
 
 (defn is-small-room? [room]
   (= (str/lower-case room) room))
-  
+
 (defn can-visit-1? [room path]
   (if (is-small-room? room)
     (let [small-rooms (filter is-small-room? path)]
@@ -30,23 +30,23 @@
 (defn can-visit-2? [room path]
   (if (is-small-room? room)
     (let [small-rooms (filter is-small-room? path)
-          visited-twice? (not= 0 (count (filter #(>= % 2) (vals (frequencies small-rooms)))))]      
+          visited-twice? (not= 0 (count (filter #(>= % 2) (vals (frequencies small-rooms)))))]
       (if visited-twice?
-        ;; this room is not already in path        
+        ;; this room is not already in path
         (not (contains? (frequencies small-rooms) room))
         true))
     true))
 
 (defn get-paths [can-visit-fn visited room data]
-  (let [next-rooms (get-exits-from data room)]    
+  (let [next-rooms (get-exits-from data room)]
     (if (or (empty? next-rooms)
-            (not (can-visit-fn room visited)))      
+            (not (can-visit-fn room visited)))
       (list (list room))
       (let [new-visited (conj visited room)
             paths (apply concat (for [next-room next-rooms]
                                   (get-paths can-visit-fn new-visited next-room data)))
-            paths (for [path paths]                    
-                    (conj path room))]        
+            paths (for [path paths]
+                    (conj path room))]
         paths))))
 
 (defn solve1 [filter-fn data]
@@ -54,10 +54,10 @@
         res (filter #(= "end" (last %)) paths)]
     (count res)))
 
-(defn main []
-  (let [input1 (get-input"inputs/day12_input1.txt")
-        part1 (solve1 can-visit-1? input1)
-        part2 (solve1 can-visit-2? input1)]
-    (println "Part1: " part1)
-    (println "Part2: " part2)))
+(defn solve []
+  (let [input (get-input"inputs/2021/day12.txt")
+        part1 (solve1 can-visit-1? input)
+        part2 (solve1 can-visit-2? input)]
+    {:part1 part1 :part2 part2}))
 
+(defn status [] "*")

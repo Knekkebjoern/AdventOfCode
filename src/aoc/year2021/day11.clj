@@ -1,11 +1,11 @@
-(ns year_2021.day11)
+(ns aoc.year2021.day11)
 (require '[clojure.string :as str])
 
 (defn get-input [filename]
   (let [lines (str/split (slurp filename) #"\n")
         data  (loop [lines lines y 0 res {}]
                 (if (empty? lines)
-                  res                  
+                  res
                   (let [line (first lines)
                         xs (map #(Integer/parseInt (str %)) line)
                         d (reduce-kv (fn [res idx itm ]
@@ -44,13 +44,13 @@
                                    (keys (filter (fn [[k v]] (> v 9)) population)))
                    should-flash (clojure.set/difference can-flash flashed)]
                (if (empty? should-flash)
-                 {:data (update-some (fn [_] 0) population flashed) 
-                  :flashes (+ flashes (count flashed))} 
+                 {:data (update-some (fn [_] 0) population flashed)
+                  :flashes (+ flashes (count flashed))}
                  (let [get-flashed (apply concat (map #(get-neighbors % population) should-flash))
                        ;;a (prn "get-flashed" get-flashed)
                        increased (update-some inc population get-flashed)
                        did-flash (set (concat should-flash flashed))]
-                   (recur increased did-flash)))))]    
+                   (recur increased did-flash)))))]
     s2))
 
 (defn show [data]
@@ -74,9 +74,10 @@
         {:data s1 :n n}
         (recur s1 (inc n))))))
 
-(let [input1 (get-input"inputs/day11_input1.txt")      
-      part1 (solve1 {:data input1 :flashes 0})
-      part2 (solve2 {:data input1 :flashes 0})]
-  (println "Part1: " part1)
-  (println "Part2: " part2))
+(defn solve []
+  (let [input (get-input"inputs/2021/day11.txt")
+        part1 (:flashes (solve1 {:data input :flashes 0}))
+        part2 (:n (solve2 {:data input :flashes 0}))]
+    {:part1 part1 :part2 part2}))
 
+(defn status [] "*")
