@@ -79,7 +79,7 @@
       (- (count res) 2)
       (recur (get prev curr) (conj res curr)))))
 
-(defn solve [state]
+(defn solve1 [state]
   (loop [state state]
     (let [state' (dijkstra-step state)]
       (if (empty? (:Q state'))
@@ -87,7 +87,7 @@
         (recur state')))))
 
 (defn solve2 [state]
-  (let [state' (solve (init-state (assoc state
+  (let [state' (solve1 (init-state (assoc state
                                          :source (:target state)
                                          :target (:source state)
                                          :valid-neighbor-f valid-neighbor-one-down?)))
@@ -169,7 +169,7 @@
 
 (defn solve []
   (let [input (get-input "inputs/2022/day12.txt")
-        state (solve input)
+        state (solve1 input)
         part1 (steps-from (:prev state) (:source state) (:target state))
         part2 (solve2 input)]
     {:part1 part1 :part2 part2}))
