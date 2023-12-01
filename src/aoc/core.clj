@@ -3,7 +3,7 @@
             [clojure.java.io :as io])
   (:gen-class))
 
-(def YEARS (range 2015 2023))
+(def YEARS (range 2015 2024))
 (def DAYS (range 1 26))
 
 (defn get-input-filename [year day]
