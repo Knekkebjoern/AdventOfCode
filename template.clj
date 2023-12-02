@@ -16,6 +16,9 @@
 (defn solve1 [input]
   )
 
+(defn solve2 [input]
+  )
+
 (defn solve []
   (let [[part1 part2] [nil nil]
         input (get-input)
