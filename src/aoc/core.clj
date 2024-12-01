@@ -11,12 +11,14 @@
 
 (defn fetch-input! [year day]
   ;; slurp will throw exception if file doesn't exist
+  ;; .aoc_session_id should be at the repository root and contain only the cookie session value
   (let [session-id (slurp ".aoc_session_id")
+        _ (println "using session id: " session-id)
         res (http/get (str "https://adventofcode.com/" year "/day/" day "/input")
-                      {:headers {"cookie" session-id}})]
+                      {:headers {"cookie" (str "session=" session-id)}})]
     (if (= (:status res) 200)
       (let [content (:body res)
-            filename (str "inputs/" year "/day" day ".txt") ]
+            filename (str "inputs/" year "/day" day ".txt")]
         (spit filename content)
         (println "Wrote" (count content) "bytes to" filename)))))
 
