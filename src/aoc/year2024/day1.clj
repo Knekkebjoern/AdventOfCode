@@ -1,4 +1,6 @@
-(ns aoc.year2024.day1)
+(ns aoc.year2024.day1
+  (:require
+   [aoc.io]))
 
 (comment
   (aoc.core/fetch-input! 2024 1))
@@ -6,7 +8,7 @@
 (def input-filename "inputs/2024/day1.txt")
 
 (defn get-input []
-  (let [numbers (clojure.edn/read-string (str "["  (slurp input-filename) "]"))
+  (let [numbers (clojure.edn/read-string (str "["  (aoc.io/read-file input-filename) "]"))
         cols ((juxt #(sort (map first %)) #(sort (map second %))) (partition 2 numbers))]
     cols))
 
