@@ -22,7 +22,9 @@
 
 (defn combinations [coll]
   (into [coll] (doall (for [i (range 0 (count coll))]
-                        (into (vec (take i coll)) (drop (inc i) coll))))))
+                        (aoc.utils/drop-indices coll [i])
+                        ;;(into (vec (take i coll)) (drop (inc i) coll))
+                        ))))
 
 (defn is-safe-2? [levels]
   (some true? (map is-safe? (combinations levels))))
@@ -38,6 +40,9 @@
         input (get-input)
         part1 (solve1 input)
         part2 (solve2 input)]
-    (println {:part1 part1 :part2 part2})))
+    {:part1 part1 :part2 part2}))
+
+(solve)
+;; => {:part1 502, :part2 544}
 
 (defn status [] "*")
