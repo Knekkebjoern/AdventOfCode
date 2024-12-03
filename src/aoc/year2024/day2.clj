@@ -1,18 +1,19 @@
 (ns aoc.year2024.day2
-  (:require [clojure.string :as str]
-            [clojure.pprint :as pprint]
-            [clojure.set :as cset]
-            [aoc.io :as io]))
+  (:require
+   [aoc.core :as aoc]
+   [aoc.io :as io]
+   [aoc.utils :as utils]
+   [clojure.edn :as edn]))
 
 (comment
-  (aoc.core/fetch-input! 2024 2))
+  (aoc/fetch-input! 2024 2))
 
 (def input-filename "inputs/2024/day2.txt")
 
 (defn get-input []
   (let [lines (io/split-lines (io/read-file input-filename))]
     (doall (for [l lines]
-             (clojure.edn/read-string (str "[" l "]"))))))
+             (edn/read-string (str "[" l "]"))))))
 
 (defn is-safe? [levels]
   (let [diffs (map (fn [[a b]]  (- b a))  (partition 2 1 levels))]
@@ -22,7 +23,7 @@
 
 (defn combinations [coll]
   (into [coll] (doall (for [i (range 0 (count coll))]
-                        (aoc.utils/drop-indices coll [i])
+                        (utils/drop-indices coll [i])
                         ;;(into (vec (take i coll)) (drop (inc i) coll))
                         ))))
 
