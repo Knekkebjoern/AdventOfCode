@@ -13,13 +13,7 @@
   :resource-paths ["resources/rebl-0.9.245.jar"]
   :repl-options {:init-ns aoc.core}
   :main aoc.core
-  :jvm-opts []
+  :jvm-opts ["-Xmx2g" "-server"]
   :plugins [[lein-cljfmt "0.5.6"]]
   :user {:plugins [[cider/cider-nrepl "0.9.0"]]}
-
-  :profiles {:dev {:dependencies [[com.github.flow-storm/clojure "1.12.0-2"]
-                                  [com.github.flow-storm/flow-storm-dbg "4.0.2"]]
-                   ;; for disabling the official compiler
-                   :exclusions [org.clojure/clojure]
-                   :jvm-opts ["-Dclojure.storm.instrumentEnable=true"
-                              "-Dclojure.storm.instrumentOnlyPrefixes=aoc."]}})
+  :profiles {:dev {:dependencies [[com.github.flow-storm/clojure "1.12.0-2"]]}})
