@@ -3,8 +3,8 @@
 use strict;
 $|++;
 
-my $year = 2024;
-foreach my $day (1..25) {
+my $year = 2025;
+foreach my $day (1..12) {
     my $filepath = "./src/aoc/year${year}/day${day}.clj";
     if (-e $filepath) {
 	print "# Already exists: $filepath\n"
